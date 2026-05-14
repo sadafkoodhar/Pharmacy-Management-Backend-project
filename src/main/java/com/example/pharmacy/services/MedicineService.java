@@ -4,7 +4,10 @@ import com.example.pharmacy.entity.Medicine;
 import com.example.pharmacy.repository.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MedicineService {
@@ -36,5 +39,16 @@ public class MedicineService {
 
     public void deleteMedicine(Long id) {
         medicineRepository.deleteById(id);
+    }
+
+    public List<Medicine> addMedicines(List<Medicine> medicines) {
+        return medicineRepository.saveAll(medicines);
+    }
+
+    public Map<String, Object> getDashboardStats() {
+        Map<String, Object> stats = new HashMap<>();
+        List<Medicine> lowStock = medicineRepository.getLowStockMedicines();
+        stats.put("lowStockMedicines", lowStock);
+        return stats;
     }
 }

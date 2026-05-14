@@ -13,4 +13,5 @@ public interface MedicineRepository extends JpaRepository<Medicine,Long> {
 
     @Query("SELECT m FROM Medicine m WHERE m.quantity < 5")
     List<Medicine> getLowStockMedicines();
+
 }
