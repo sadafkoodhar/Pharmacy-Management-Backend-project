@@ -59,4 +59,10 @@ public class MedicineController {
         Map<String, Object> stats = medicineService.getDashboardStats();
         return GenericResponse.success(stats);
     }
+    @GetMapping("/expiringSoon")
+    public GenericResponse<List<Medicine>> getExpiredata() {
+        List<Medicine> stats = medicineService.getExpiredata();
+        return GenericResponse.success(stats);
+
+}
 }

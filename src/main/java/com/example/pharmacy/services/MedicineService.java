@@ -5,6 +5,8 @@ import com.example.pharmacy.repository.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,4 +53,10 @@ public class MedicineService {
         stats.put("lowStockMedicines", lowStock);
         return stats;
     }
-}
+
+    public List<Medicine> getExpiredata() {
+            LocalDate today = LocalDate.now();
+            LocalDate thirtyDaysFromNow = today.plusDays(30);
+            return medicineRepository.findExpiringSoon(today, thirtyDaysFromNow);
+        }
+    }
