@@ -40,8 +40,13 @@ public class MedicineService {
     }
 
     public void deleteMedicine(Long id) {
-        medicineRepository.deleteById(id);
+        if (medicineRepository.existsById(id)) {
+            medicineRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Medicine with ID " + id + " not found!");
+        }
     }
+
 
     public List<Medicine> addMedicines(List<Medicine> medicines) {
         return medicineRepository.saveAll(medicines);
@@ -55,8 +60,8 @@ public class MedicineService {
     }
 
     public List<Medicine> getExpiredata() {
-            LocalDate today = LocalDate.now();
-            LocalDate thirtyDaysFromNow = today.plusDays(30);
-            return medicineRepository.findExpiringSoon(today, thirtyDaysFromNow);
-        }
+        LocalDate today = LocalDate.now();
+        LocalDate thirtyDaysFromNow = today.plusDays(30);
+        return medicineRepository.findExpiringSoon(today, thirtyDaysFromNow);
     }
+}

@@ -50,9 +50,13 @@ public class MedicineController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        medicineService.deleteMedicine(id);
-        return "Deleted successfully!";
+    public GenericResponse<String> delete(@PathVariable Long id) {
+        try {
+            medicineService.deleteMedicine(id);
+            return GenericResponse.success("Deleted successfully!");
+        } catch (Exception e) {
+            return GenericResponse.failed(e.getMessage());}
+
     }
     @GetMapping("/low-stock")
     public GenericResponse<Map<String, Object>> getDashboardData() {
