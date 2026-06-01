@@ -8,6 +8,7 @@ import com.example.pharmacy.repository.ReceiptRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -42,10 +43,17 @@ public class ReceiptService {
 
     public Map<String, Object> getDashboardStats() {
         Map<String, Object> stats = new HashMap<>();
-
         Double revenue = receiptRepo.getTodayRevenue();
         Long billCount = receiptRepo.getTodayBillCount();
         List<Medicine> lowStock = medicineRepository.getLowStockMedicines();
+        LocalDate today = LocalDate.now();
+
+        Double totalLoss = medicineRepository.calculateTotalLoss(today);
+        Double totalProfit = receiptRepo.calculateTotalProfit();
+
+        // Agar database se null aaye (yaani koi data na ho), toh safely 0.0 set karein
+        stats.put("totalLoss", (totalLoss != null) ? totalLoss : 0.0);
+        stats.put("totalProfit", (totalProfit != null) ? totalProfit : 0.0);
 
         stats.put("todayRevenue", (revenue != null) ? revenue : 0.0);
         stats.put("todayBillCount", billCount);

@@ -18,4 +18,8 @@ public interface MedicineRepository extends JpaRepository<Medicine,Long> {
 
     @Query("SELECT m FROM Medicine m WHERE m.expiryDate <= :targetDate AND m.expiryDate >= :today")
     List<Medicine> findExpiringSoon(@Param("today") LocalDate today, @Param("targetDate") LocalDate targetDate);
+
+    @Query("SELECT SUM(m.quantity * m.costPrice) FROM Medicine m WHERE m.expiryDate < :today")
+    Double calculateTotalLoss(@Param("today") LocalDate today);
+
 }

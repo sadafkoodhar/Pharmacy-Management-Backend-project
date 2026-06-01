@@ -20,5 +20,6 @@ public class Receipt {
             name = "receiptItems",
             joinColumns = @JoinColumn(name = "receiptId"),
             inverseJoinColumns = @JoinColumn(name = "medicineId"))
+    @org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
     private List<Medicine> items;
 }
