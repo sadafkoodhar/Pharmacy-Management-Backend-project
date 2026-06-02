@@ -20,5 +20,6 @@ public class ReceiptController {
         } catch (Exception e) {
             return GenericResponse.failed(e.getMessage());
         }
+
     }
 }
